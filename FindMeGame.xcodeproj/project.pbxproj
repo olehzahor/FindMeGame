@@ -16,6 +16,7 @@
 		049E9A6026345DD900CB347F /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049E9A5F26345DD900CB347F /* Game.swift */; };
 		049E9A6526345F9100CB347F /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049E9A6426345F9100CB347F /* GameViewModel.swift */; };
 		049E9A7B26345FDF00CB347F /* UIViewController+CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049E9A7A26345FDF00CB347F /* UIViewController+CollectionView.swift */; };
+		049E9A9626347AA100CB347F /* action.json in Resources */ = {isa = PBXBuildFile; fileRef = 049E9A9526347AA100CB347F /* action.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		049E9A5F26345DD900CB347F /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		049E9A6426345F9100CB347F /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
 		049E9A7A26345FDF00CB347F /* UIViewController+CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+CollectionView.swift"; sourceTree = "<group>"; };
+		049E9A9526347AA100CB347F /* action.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = action.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,6 +48,7 @@
 		049E9A3D26345DC600CB347F = {
 			isa = PBXGroup;
 			children = (
+				049E9A9426347A7700CB347F /* Extra */,
 				049E9A4826345DC600CB347F /* FindMeGame */,
 				049E9A4726345DC600CB347F /* Products */,
 			);
@@ -98,6 +101,14 @@
 				049E9A7A26345FDF00CB347F /* UIViewController+CollectionView.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		049E9A9426347A7700CB347F /* Extra */ = {
+			isa = PBXGroup;
+			children = (
+				049E9A9526347AA100CB347F /* action.json */,
+			);
+			path = Extra;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -157,6 +168,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				049E9A9626347AA100CB347F /* action.json in Resources */,
 				049E9A5626345DCA00CB347F /* LaunchScreen.storyboard in Resources */,
 				049E9A5326345DCA00CB347F /* Assets.xcassets in Resources */,
 				049E9A5126345DC600CB347F /* Main.storyboard in Resources */,
