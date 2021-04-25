@@ -66,7 +66,7 @@ class GameViewController: UIViewController, Storyboarded {
                                 forCellWithReuseIdentifier: "Cell")
     }
                 
-    func startNewGame(shoudStartTimer: Bool = false) {
+    func startNewGame(shoudStartTimer: Bool = true) {
         gameViewModel.startNewGame()
         updateUI()
         if shoudStartTimer { startTimer() }
@@ -82,7 +82,7 @@ class GameViewController: UIViewController, Storyboarded {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        startTimer()
+        if timer == nil { startTimer() }
     }
 }
 
