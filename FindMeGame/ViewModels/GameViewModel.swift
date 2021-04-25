@@ -7,64 +7,108 @@
 
 import UIKit
 
+class ColorGenerator {
+    var baseColors: [UIColor] = [.purple]
+    
+    func generateBaseColor() -> UIColor {
+        return baseColors.randomElement() ?? .purple
+    }
+    
+    func generate(baseColor: UIColor, alphas: [CGFloat]) -> [UIColor] {
+        alphas.map { baseColor.withAlphaComponent($0) }
+    }
+}
+
 class GameViewModel {
     private var game: Game
+    private var store: GameDataStore = UDGameDataStore()
+    private var colorGenerator = ColorGenerator()
     
-    private(set) var baseColor: UIColor = .green
+    private(set) var state: State = .undefined
     
-    let defaults = UserDefaults.standard
-    private let bestLevelUDKey = "FindMeGame_BestLevel"
+    private(set) var baseColor: UIColor = .purple
+    private(set) var elements: [UIColor] = []
     
-    var elements: [UIColor] = []
-    var level: String { String(game.currentLevel + 1) }
+    var level: String { String(_level) }
+    var bestLevel: String { String(_bestLevel) }
+    
     var rows: Int { game.fieldSize.rows }
     var columns: Int { game.fieldSize.columns }
     
-    var bestLevel: String {
-        String(defaults.integer(forKey: bestLevelUDKey))
-    }
+    private var _bestLevel: Int { store.getBestLevel() }
+    private var _level: Int { game.currentLevel + 1 }
     
-    private func generateBaseColor() -> UIColor {
-        let colors: [UIColor] = [.magenta, .orange, .yellow, .green, .blue, .cyan, .purple]
-        return colors.randomElement() ?? .green
+    private func generateBaseColor() {
+        baseColor = colorGenerator.generateBaseColor()
     }
     
     private func generateColors() -> [UIColor] {
-        game.elements.map {
-            switch $0 {
-            case .regular:
-                return baseColor
-            case .different(let alpha):
-                return baseColor.withAlphaComponent(CGFloat(alpha))
-            }
-        }
+        colorGenerator.generate(
+            baseColor: baseColor,
+            alphas: game.elements.map { $0.alpha} )
+    }
+
+    private func recreateElements() {
+        elements = generateColors()
     }
     
     private func updateBestLevel() {
-        if level > bestLevel {
-            defaults.set(level, forKey: bestLevelUDKey)
+        if game.currentLevel + 1 > _bestLevel {
+            store.saveBestLevel(game.currentLevel)
         }
     }
     
-    func didSelectElement(at index: Int) -> Bool {
+    private func getToNextLevel() {
+        game.getToNextLevel()
+        recreateElements()
+        updateBestLevel()
+    }
+    
+    func didSelectElement(at index: Int) {
         let isPassed = game.checkElement(atIndex: index)
-        elements = generateColors()
         
         if isPassed {
-            game.getToNextLevel()
+            if !game.isOnLastLevel {
+                getToNextLevel()
+            } else { state = .won }
         } else {
-            game.reset()
-            baseColor = generateBaseColor()
+            state = .failed
         }
-        
-        updateBestLevel()
-        return isPassed
+    }
+    
+    func failGame() {
+        state = .failed
+    }
+    
+    func startNewGame() {
+        game.reset()
+        recreateElements()
+        generateBaseColor()
+        state = .inProgress
     }
     
     init(game: Game) {
         self.game = game
-        self.baseColor = generateBaseColor()
-        
-        elements = generateColors()
+        generateBaseColor()
+    }
+}
+
+extension GameViewModel {
+    enum State {
+        case undefined
+        case inProgress
+        case won
+        case failed
+    }
+}
+
+extension Game.Element {
+    var alpha: CGFloat {
+        switch self {
+        case .regular:
+            return CGFloat(1)
+        case .different(let alpha):
+            return CGFloat(alpha)
+        }
     }
 }

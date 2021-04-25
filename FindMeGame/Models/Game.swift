@@ -19,7 +19,8 @@ struct Game {
     private(set) var elements: [Element] = []
     
     private func createDifferentElement() -> Element {
-        let opacity = baseOpacity + (0.98 - baseOpacity) * Double(currentLevel) / Double(levelsCount)
+        let opacity = baseOpacity
+            + (0.98 - baseOpacity) * Double(currentLevel) / Double(levelsCount)
         return Element.different(opacity)
     }
     
@@ -37,7 +38,7 @@ struct Game {
         }
     }
     
-    mutating private func check(_ element: Element) -> Bool {
+    private func check(_ element: Element) -> Bool {
         switch element {
         case .regular:
             return false
@@ -46,7 +47,9 @@ struct Game {
         }
     }
     
-    mutating func checkElement(atIndex index: Int) -> Bool {
+    var isOnLastLevel: Bool { !(currentLevel < levelsCount - 1) }
+    
+    func checkElement(atIndex index: Int) -> Bool {
         check(elements[index])
     }
     
