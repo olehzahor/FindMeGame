@@ -17,13 +17,13 @@ class MainCoordinator: Coordinator {
     }
 
     func start() {
-        let vc = HomeViewController.instantiate()
+        let vc = LoadingViewController.instantiate()
         vc.coordinator = self
         navigationController.pushViewController(vc, animated: false)
     }
     
-    func resolve() {
-        let vc = LoadingViewController.instantiate()
+    func showHome() {
+        let vc = HomeViewController.instantiate()
         vc.coordinator = self
         navigationController.pushViewController(vc, animated: true)
     }

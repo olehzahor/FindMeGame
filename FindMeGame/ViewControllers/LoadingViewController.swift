@@ -19,7 +19,7 @@ class LoadingViewController: UIViewController, Storyboarded {
             if let url = $0 {
                 self.coordinator?.showWebView(url)
             } else {
-                self.coordinator?.showGame()
+                self.coordinator?.showHome()
             }
         }
     }
@@ -27,6 +27,13 @@ class LoadingViewController: UIViewController, Storyboarded {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.viewControllers.removeAll { $0 == self}
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
 }

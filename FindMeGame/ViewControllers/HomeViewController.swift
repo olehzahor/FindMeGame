@@ -21,7 +21,7 @@ class HomeViewController: UIViewController, Storyboarded {
     }
     
     @IBAction func startNewGame(_ sender: Any) {
-        coordinator?.resolve()
+        coordinator?.showGame()
     }
     
     @IBAction func showAboutInfo(_ sender: Any) {
