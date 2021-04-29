@@ -20,6 +20,7 @@ class LoadingViewController: UIViewController, Storyboarded {
                 self.coordinator?.showWebView(url)
             } else {
                 self.coordinator?.showHome()
+                self.navigationController?.setNavigationBarHidden(false, animated: true)
             }
         }
     }
@@ -27,8 +28,6 @@ class LoadingViewController: UIViewController, Storyboarded {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.viewControllers.removeAll { $0 == self}
-        navigationController?.setNavigationBarHidden(false, animated: animated)
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
