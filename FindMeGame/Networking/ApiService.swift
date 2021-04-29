@@ -16,13 +16,21 @@ class ApiService {
         case badRequest
     }
     
+    lazy var session: URLSession = {
+        let config = URLSessionConfiguration.default
+        config.requestCachePolicy = .reloadIgnoringLocalCacheData
+        config.urlCache = nil
+
+        return URLSession(configuration: config)
+    }()
+    
     @discardableResult
     func fetch<T: Decodable>(
         url: URL?,
         completion: @escaping (Result<T, Error>) -> Void) -> URLSessionTask? {
         guard let url = url else { return nil }
         
-        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+        let task = session.dataTask(with: url) { (data, response, error) in
             if let error = error {
                 print(error)
                 DispatchQueue.main.async {
